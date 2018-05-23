@@ -35,14 +35,13 @@ PKG_CONFIG_DEPENDS := \
   COOVACHILLIDEDALO_OPENSSL
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/kernel.mk
 
 define Package/coova-chilli-dedalo
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
   DEPENDS:=+kmod-tun +librt +COOVACHILLIDEDALO_CYASSL:libcyassl +COOVACHILLIDEDALO_OPENSSL:libopenssl
-  TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
+  TITLE:=Icaro fork of Coova Chilli
   URL:=http://www.coova.org/CoovaChilli
   MENU:=1
 endef
@@ -59,21 +58,6 @@ endef
 
 define Package/coova-chilli-dedalo/config
   source "$(SOURCE)/Config.in"
-endef
-
-define KernelPackage/ipt-coova
-  URL:=http://www.coova.org/CoovaChilli
-  SUBMENU:=Netfilter Extensions
-  DEPENDS:=coova-chilli +kmod-ipt-core +libxtables
-  TITLE:=Coova netfilter module
-  FILES:=$(PKG_BUILD_DIR)/src/linux/xt_*.$(LINUX_KMOD_SUFFIX)
-  AUTOLOAD:=$(call AutoProbe,xt_coova)
-endef
-
-define KernelPackage/ipt-coova/description
-	Netfilter kernel module for CoovaChilli
-	Includes:
-	- coova
 endef
 
 DISABLE_NLS=
@@ -113,7 +97,6 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLIDEDALO_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
 	$(if $(CONFIG_COOVACHILLIDEDALO_CYASSL),--with,--without)-cyassl \
 	$(if $(CONFIG_COOVACHILLIDEDALO_OPENSSL),--with,--without)-openssl \
-	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
 
@@ -132,10 +115,6 @@ define Package/coova-chilli-dedalo/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/chilli* $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so.* $(1)/usr/lib/
-	$(if $(CONFIG_PACKAGE_kmod-ipt-coova), \
-		$(INSTALL_DIR) $(1)/usr/lib/iptables; \
-		$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/ \
-	)
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
 	$(INSTALL_DIR) $(1)/etc/config
@@ -145,4 +124,3 @@ define Package/coova-chilli-dedalo/install
 endef
 
 $(eval $(call BuildPackage,coova-chilli-dedalo))
-$(eval $(call KernelPackage,ipt-coova))
