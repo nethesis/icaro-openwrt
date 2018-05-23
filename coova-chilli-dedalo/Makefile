@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coova-chilli-dedalo
 PKG_VERSION:=1.3.0+20141128
-PKG_MAINTAINER:=Jaehoon You <teslamint@gmail.com>
+PKG_MAINTAINER:=Matteo Valentini <matteo.valentini@nethesis.it>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 PKG_RELEASE:=1
