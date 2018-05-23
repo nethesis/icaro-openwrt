@@ -1,0 +1,106 @@
+From 135b1a44dc4ea47f0d0b7d2539da57a885f3f549 Mon Sep 17 00:00:00 2001
+From: Matteo Valentini <matteo.valentini@nethesis.it>
+Date: Wed, 17 Jan 2018 11:01:28 +0100
+Subject: [PATCH 1/2] Add cross-origin access on json interface
+
+Add header Access-Control-Allow-Origin on json interface for enable
+cross-origin HTTP requests. The presence of the header is determinate
+by "alloworigin" option, if the option is present and no vaule is
+specified the default vaule is "*".
+
+See also:
+https://developer.mozilla.org/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+and
+https://developer.mozilla.org/docs/Web/HTTP/CORS
+---
+ src/cmdline.ggo |  1 +
+ src/main-opt.c  |  9 +++++++++
+ src/options.c   |  8 ++++++++
+ src/options.h   |  4 ++++
+ src/redir.c     | 10 ++++++++++
+ 5 files changed, 32 insertions(+)
+
+--- a/src/cmdline.ggo
++++ b/src/cmdline.ggo
+@@ -152,6 +152,7 @@ option "uamlogoutip"  - "HTTP Auto-Logou
+ option "uamaliasip"   - "Special IP Address aliased (redirect) to uamlisten/uamport" string default="1.0.0.1" no
+ option "uamaliasname" - "Special simple hostname (no dots) to be resolved to uamaliasip" string no
+ option "uamhostname"  - "Special simple hostname (no dots) to be resolved to uamlisten" string no
++option "alloworigin"  - "Allow cross-origin HTTP requests on json interface" string argoptional default="*" no
+ 
+ option "authedallowed" - "Resources exempt from session limitations" string no multiple
+ option "uamauthedallowed" - "Use uamallowed as resources exempt from session limitations" flag off
+--- a/src/main-opt.c
++++ b/src/main-opt.c
+@@ -1305,6 +1305,15 @@ int main(int argc, char **argv) {
+   _options.usestatusfile = STRDUP(args_info.usestatusfile_arg);
+   _options.uamaliasname = STRDUP(args_info.uamaliasname_arg);
+   _options.uamhostname = STRDUP(args_info.uamhostname_arg);
++
++  if (args_info.alloworigin_given)
++#ifdef ENABLE_JSON
++    _options.alloworigin = STRDUP(args_info.alloworigin_arg);
++#endif
++#if(_debug_ && !defined(ENABLE_JSON))
++    syslog(LOG_WARNING, "JSON not implemented. build with --enable-json");
++#endif
++
+   _options.binconfig = STRDUP(args_info.bin_arg);
+   _options.ethers = STRDUP(args_info.ethers_arg);
+ #ifdef ENABLE_IEEE8021Q
+--- a/src/options.c
++++ b/src/options.c
+@@ -357,6 +357,10 @@ int options_fromfd(int fd, bstring bt) {
+   if (!option_s_l(bt, &o.uamaliasname)) return 0;
+   if (!option_s_l(bt, &o.uamhostname)) return 0;
+ 
++#ifdef ENABLE_JSON
++  if (!option_s_l(bt, &o.alloworigin)) return 0;
++#endif
++
+ #ifdef ENABLE_REDIRINJECT
+   if (!option_s_l(bt, &o.inject)) return 0;
+   if (!option_s_l(bt, &o.inject_ext)) return 0;
+@@ -555,6 +559,10 @@ int options_save(char *file, bstring bt)
+   if (!option_s_s(bt, &o.uamaliasname)) return 0;
+   if (!option_s_s(bt, &o.uamhostname)) return 0;
+ 
++#ifdef ENABLE_JSON
++  if (!option_s_s(bt, &o.alloworigin)) return 0;
++#endif
++
+ #ifdef ENABLE_REDIRINJECT
+   if (!option_s_s(bt, &o.inject)) return 0;
+   if (!option_s_s(bt, &o.inject_ext)) return 0;
+--- a/src/options.h
++++ b/src/options.h
+@@ -180,6 +180,10 @@ struct options_t {
+   char *uamaliasname;            /* Simple hostname (no dots) DNS name for uamalias */
+   char *uamhostname;             /* Simple hostname (no dots) DNS name for uamlisten */
+ 
++#ifdef ENABLE_JSON
++  char *alloworigin;
++#endif
++
+ #ifdef ENABLE_FORCEDNS
+   struct in_addr forcedns1_addr;  /* IP address to force DNS to */
+   struct in_addr forcedns2_addr;  /* IP address to force DNS to */
+--- a/src/redir.c
++++ b/src/redir.c
+@@ -1388,6 +1388,16 @@ static int redir_json_reply(struct redir
+   bassignformat(tmp , "%d", blength(json));
+   bconcat(s, tmp);
+ 
++  if (_options.alloworigin) {
++    if (!strncmp(_options.alloworigin, "*", 1)) {
++      bcatcstr(s, "\r\nAccess-Control-Allow-Origin: *");
++    } else {
++      bassignformat(tmp , "\r\nAccess-Control-Allow-Origin: %s", _options.alloworigin);
++      bconcat(s, tmp);
++      bcatcstr(s, "\r\nVary: Origin");
++    }
++  }
++
+   bcatcstr(s, "\r\nContent-Type: ");
+   if (tmp->slen) bcatcstr(s, "text/javascript");
+   else bcatcstr(s, "application/json");
