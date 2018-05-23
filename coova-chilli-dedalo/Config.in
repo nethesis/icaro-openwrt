@@ -1,47 +1,47 @@
 # CoovaChilli advanced configuration
 
 menu "Configuration"
-	depends on PACKAGE_coova-chilli
+	depends on PACKAGE_coova-chilli-dedalo
 
-config COOVACHILLI_PROXY
+config COOVACHILLIDEDALO_PROXY
         bool "Enable support for chilli proxy. Required for AAA Proxy through http"
         default n
 
-config COOVACHILLI_REDIR
+config COOVACHILLIDEDALO_REDIR
 	bool "Enable support for redir server. Required for uamregex"
 	default n
 
-config COOVACHILLI_MINIPORTAL
+config COOVACHILLIDEDALO_MINIPORTAL
 	bool "Enable support Coova miniportal"
 	default n
 
-config COOVACHILLI_USERAGENT
+config COOVACHILLIDEDALO_USERAGENT
 	bool "Enable recording user-agent"
 	default n
 
-config COOVACHILLI_DNSLOG
+config COOVACHILLIDEDALO_DNSLOG
 	bool "Enable support to log DNS name queries"
 	default n
 
-config COOVACHILLI_UAMDOMAINFILE
+config COOVACHILLIDEDALO_UAMDOMAINFILE
 	bool "Enable loading of mass uamdomains from file"
 	default n
 
-config COOVACHILLI_LARGELIMITS
+config COOVACHILLIDEDALO_LARGELIMITS
 	bool "Enable larger limits for use with non-embedded systems"
 	default n
 
 choice
 	prompt "SSL library"
-	default COOVACHILLI_NOSSL
+	default COOVACHILLIDEDALO_NOSSL
 
-config COOVACHILLI_NOSSL
+config COOVACHILLIDEDALO_NOSSL
 	bool "No SSL support"
 
-config COOVACHILLI_CYASSL
+config COOVACHILLIDEDALO_CYASSL
 	bool "CyaSSL"
 
-config COOVACHILLI_OPENSSL
+config COOVACHILLIDEDALO_OPENSSL
 	bool "OpenSSL"
 
 endchoice

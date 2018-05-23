@@ -7,12 +7,12 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=coova-chilli
+PKG_NAME:=coova-chilli-dedalo
 PKG_VERSION:=1.3.0+20141128
 PKG_MAINTAINER:=Jaehoon You <teslamint@gmail.com>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
-PKG_RELEASE:=6
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=git://github.com/coova/coova-chilli
@@ -24,30 +24,30 @@ PKG_MIRROR_HASH:=89c9b313881c658a0f6b91329a78bb1a0151878b19bc99b315976081c635555
 PKG_INSTALL:=1
 
 PKG_CONFIG_DEPENDS := \
-  COOVACHILLI_MINIPORTAL \
-  COOVACHILLI_REDIR \
-  COOVACHILLI_USERAGENT \
-  COOVACHILLI_DNSLOG \
-  COOVACHILLI_UAMDOMAINFILE \
-  COOVACHILLI_LARGELIMITS \
-  COOVACHILLI_NOSSL \
-  COOVACHILLI_CYASSL \
-  COOVACHILLI_OPENSSL
+  COOVACHILLIDEDALO_MINIPORTAL \
+  COOVACHILLIDEDALO_REDIR \
+  COOVACHILLIDEDALO_USERAGENT \
+  COOVACHILLIDEDALO_DNSLOG \
+  COOVACHILLIDEDALO_UAMDOMAINFILE \
+  COOVACHILLIDEDALO_LARGELIMITS \
+  COOVACHILLIDEDALO_NOSSL \
+  COOVACHILLIDEDALO_CYASSL \
+  COOVACHILLIDEDALO_OPENSSL
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-define Package/coova-chilli
+define Package/coova-chilli-dedalo
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+kmod-tun +librt +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl
+  DEPENDS:=+kmod-tun +librt +COOVACHILLIDEDALO_CYASSL:libcyassl +COOVACHILLIDEDALO_OPENSSL:libopenssl
   TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
   URL:=http://www.coova.org/CoovaChilli
   MENU:=1
 endef
 
-define Package/coova-chilli/description
+define Package/coova-chilli-dedalo/description
 	CoovaChilli is an open source access controller for wireless LAN
 	access points and is based on ChilliSpot. It is used for authenticating
 	users of a wireless (or wired) LAN. It supports web based login (UAM)
@@ -57,7 +57,7 @@ define Package/coova-chilli/description
 	favorite radius server.
 endef
 
-define Package/coova-chilli/config
+define Package/coova-chilli-dedalo/config
   source "$(SOURCE)/Config.in"
 endef
 
@@ -104,24 +104,24 @@ endef
 
 define Build/Configure
 	$(call Build/Configure/Default, \
-	$(if $(CONFIG_COOVACHILLI_PROXY),--enable,--disable)-chilliproxy \
-	$(if $(CONFIG_COOVACHILLI_REDIR),--enable,--disable)-chilliredir \
-	$(if $(CONFIG_COOVACHILLI_DNSLOG),--enable,--disable)-dnslog \
-	$(if $(CONFIG_COOVACHILLI_MINIPORTAL),--enable,--disable)-miniportal \
-	$(if $(CONFIG_COOVACHILLI_USERAGENT),--enable,--disable)-useragent \
-	$(if $(CONFIG_COOVACHILLI_LARGELIMITS),--enable,--disable)-largelimits \
-	$(if $(CONFIG_COOVACHILLI_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
-	$(if $(CONFIG_COOVACHILLI_CYASSL),--with,--without)-cyassl \
-	$(if $(CONFIG_COOVACHILLI_OPENSSL),--with,--without)-openssl \
+	$(if $(CONFIG_COOVACHILLIDEDALO_PROXY),--enable,--disable)-chilliproxy \
+	$(if $(CONFIG_COOVACHILLIDEDALO_REDIR),--enable,--disable)-chilliredir \
+	$(if $(CONFIG_COOVACHILLIDEDALO_DNSLOG),--enable,--disable)-dnslog \
+	$(if $(CONFIG_COOVACHILLIDEDALO_MINIPORTAL),--enable,--disable)-miniportal \
+	$(if $(CONFIG_COOVACHILLIDEDALO_USERAGENT),--enable,--disable)-useragent \
+	$(if $(CONFIG_COOVACHILLIDEDALO_LARGELIMITS),--enable,--disable)-largelimits \
+	$(if $(CONFIG_COOVACHILLIDEDALO_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
+	$(if $(CONFIG_COOVACHILLIDEDALO_CYASSL),--with,--without)-cyassl \
+	$(if $(CONFIG_COOVACHILLIDEDALO_OPENSSL),--with,--without)-openssl \
 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
 
-define Package/coova-chilli/conffiles
+define Package/coova-chilli-dedalo/conffiles
 /etc/config/chilli
 endef
 
-define Package/coova-chilli/install
+define Package/coova-chilli-dedalo/install
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/chilli.conf $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/chilli
@@ -144,5 +144,5 @@ define Package/coova-chilli/install
 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
 endef
 
-$(eval $(call BuildPackage,coova-chilli))
+$(eval $(call BuildPackage,coova-chilli-dedalo))
 $(eval $(call KernelPackage,ipt-coova))
