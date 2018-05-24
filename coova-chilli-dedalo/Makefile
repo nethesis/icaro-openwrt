@@ -96,6 +96,7 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLIDEDALO_USERAGENT),--enable,--disable)-useragent \
 	$(if $(CONFIG_COOVACHILLIDEDALO_LARGELIMITS),--enable,--disable)-largelimits \
 	$(if $(CONFIG_COOVACHILLIDEDALO_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
+	--enable-json \
 	$(if $(CONFIG_COOVACHILLIDEDALO_CYASSL),--with,--without)-cyassl \
 	$(if $(CONFIG_COOVACHILLIDEDALO_OPENSSL),--with,--without)-openssl \
 	--with-curl="$(STAGING_DIR)/usr" \
