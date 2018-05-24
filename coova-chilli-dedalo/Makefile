@@ -23,6 +23,7 @@ PKG_MIRROR_HASH:=89c9b313881c658a0f6b91329a78bb1a0151878b19bc99b315976081c635555
 
 PKG_INSTALL:=1
 
+PKG_BUILD_DEPENDS:=libcurl
 PKG_CONFIG_DEPENDS := \
   COOVACHILLIDEDALO_MINIPORTAL \
   COOVACHILLIDEDALO_REDIR \
@@ -40,7 +41,7 @@ define Package/coova-chilli-dedalo
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+kmod-tun +librt +COOVACHILLIDEDALO_CYASSL:libcyassl +COOVACHILLIDEDALO_OPENSSL:libopenssl
+  DEPENDS:=+kmod-tun +librt +COOVACHILLIDEDALO_CYASSL:libcyassl +COOVACHILLIDEDALO_OPENSSL:libopenssl +libcurl +zlib
   TITLE:=Icaro fork of Coova Chilli
   URL:=http://www.coova.org/CoovaChilli
   MENU:=1
@@ -97,6 +98,7 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLIDEDALO_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
 	$(if $(CONFIG_COOVACHILLIDEDALO_CYASSL),--with,--without)-cyassl \
 	$(if $(CONFIG_COOVACHILLIDEDALO_OPENSSL),--with,--without)-openssl \
+	--with-curl="$(STAGING_DIR)/usr" \
 	)
 endef
 

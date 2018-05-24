@@ -1,0 +1,11 @@
+--- a/configure.in
++++ b/configure.in
+@@ -483,7 +483,7 @@ AS_IF([test x"$with_curl" != xno],
+               ],
+               [AC_MSG_FAILURE(
+                  [--with-curl was given, but test for curl failed])],
+-              [-lcurl -lz -lssl -lcrypto])])
++              [-lcurl -lz])])
+ 
+ AM_CONDITIONAL(WITH_CURL, [test x"$with_curl" != xno])
+ 
