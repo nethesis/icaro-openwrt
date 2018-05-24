@@ -46,6 +46,9 @@ define Package/dedalo/install
 	
 	touch $(1)/opt/icaro/dedalo/local.conf
 	touch $(1)/opt/icaro/dedalo/walled_gardens/local.conf
+
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) files/dedalo.init $(1)/etc/init.d/dedalo
 endef
 
 $(eval $(call BuildPackage,dedalo))
