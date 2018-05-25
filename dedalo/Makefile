@@ -16,6 +16,7 @@ define Package/dedalo
   TITLE:=Network Access Controller, runs on the firewall and intercepts all guest connections
   URL:=https://nethesis.github.io/icaro/
   PKGARCH:=all
+  DEPENDS:=+curl +grep +ca-bundle +haserl +coova-chilli-dedalo
 endef
 
 define Package/dedalo/description
