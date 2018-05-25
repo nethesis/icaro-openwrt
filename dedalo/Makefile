@@ -27,9 +27,11 @@ define Build/Compile
 endef
 
 define Package/dedalo/install
-	$(INSTALL_DIR) $(1)/opt/icaro/dedalo
 
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dedalo/dedalo $(1)/opt/icaro/dedalo/dedalo
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dedalo/dedalo $(1)/usr/bin/
+
+	$(INSTALL_DIR) $(1)/opt/icaro/dedalo
 	$(INSTALL_CONF) $(PKG_BUILD_DIR)/dedalo/config $(1)/opt/icaro/dedalo/config
 	
 	$(INSTALL_DIR) $(1)/opt/icaro/dedalo/template
