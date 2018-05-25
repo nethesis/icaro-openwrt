@@ -1,0 +1,24 @@
+--- a/dedalo/dedalo
++++ b/dedalo/dedalo
+@@ -82,16 +82,17 @@ case "$OPT" in
+         fi
+     ;;
+     start)
+-        systemctl start dedalo
++        /etc/init.d/dedalo start
+     ;;
+     restart)
+-        systemctl restart dedalo
++        /etc/init.d/dedalo restart
+     ;;
+     stop)
+-        systemctl stop dedalo
++        /etc/init.d/dedalo stop
+     ;;
+     status)
+-        systemctl status dedalo
++        #systemctl status dedalo
++	echo not implemented in procd!
+     ;;
+     info)
+         echo "Dedalo: Network Access Controller"

@@ -1,0 +1,8 @@
+--- a/dedalo/dedalo
++++ b/dedalo/dedalo
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/sh
+ 
+ OPT=$1
+ shift

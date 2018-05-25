@@ -1,0 +1,8 @@
+--- a/dedalo/template/engine
++++ b/dedalo/template/engine
+@@ -5,4 +5,4 @@ HS_AAA_HOST=$(echo "$HS_AAA_URL" | sed -
+ 
+ eval "cat <<EOF
+ $(cat "$1")
+-EOF" > /opt/icaro/dedalo/chilli.conf
++EOF"  | grep -v EOF > /opt/icaro/dedalo/chilli.conf
