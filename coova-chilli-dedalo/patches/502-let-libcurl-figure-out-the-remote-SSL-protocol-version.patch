@@ -1,0 +1,22 @@
+From dbe7234a591c3da33b3635122b3ff6ba6e9e14f8 Mon Sep 17 00:00:00 2001
+From: Thomas Wouters <thomas@kangaroot.net>
+Date: Wed, 10 Dec 2014 14:54:17 +0100
+Subject: [PATCH] Let libcurl figure out the remote SSL protocol version.
+
+---
+ src/main-proxy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main-proxy.c b/src/main-proxy.c
+index deff2d2..269fae8 100644
+--- a/src/main-proxy.c
++++ b/src/main-proxy.c
+@@ -529,7 +529,7 @@ static int http_aaa_setup(struct radius_t *radius, proxy_request *req) {
+     }
+     
+     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0);
+-    curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
++    curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+ #endif
+     
+     curl_easy_setopt(curl, CURLOPT_VERBOSE, /*debug ? 1 :*/ 0);
