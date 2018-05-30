@@ -5,7 +5,7 @@ menu "Configuration"
 
 config COOVACHILLIDEDALO_PROXY
         bool "Enable support for chilli proxy. Required for AAA Proxy through http"
-        default n
+        default y
 
 config COOVACHILLIDEDALO_REDIR
 	bool "Enable support for redir server. Required for uamregex"
@@ -13,7 +13,7 @@ config COOVACHILLIDEDALO_REDIR
 
 config COOVACHILLIDEDALO_MINIPORTAL
 	bool "Enable support Coova miniportal"
-	default n
+	default y
 
 config COOVACHILLIDEDALO_USERAGENT
 	bool "Enable recording user-agent"
@@ -29,7 +29,7 @@ config COOVACHILLIDEDALO_UAMDOMAINFILE
 
 config COOVACHILLIDEDALO_LARGELIMITS
 	bool "Enable larger limits for use with non-embedded systems"
-	default n
+	default y
 
 choice
 	prompt "SSL library"
