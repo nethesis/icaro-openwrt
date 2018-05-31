@@ -23,6 +23,8 @@ define Build/Compile
 endef
 
 define Package/openwrt-dedalo/install
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) files/dedalo.init $(1)/etc/init.d/dedalo
 endef
 
 $(eval $(call BuildPackage,openwrt-dedalo))
