@@ -22,9 +22,16 @@ endef
 define Build/Compile
 endef
 
+define Package/openwrt-dedalo/conffiles
+/etc/config/dedalo
+endef
+
 define Package/openwrt-dedalo/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) files/dedalo.init $(1)/etc/init.d/dedalo
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) files/dedalo.config $(1)/etc/config/dedalo
+
 endef
 
 $(eval $(call BuildPackage,openwrt-dedalo))
