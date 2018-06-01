@@ -17,5 +17,7 @@ start_service() {
 }
 
 stop_service() {
-	rm -rf /run/dedalo/
+	if [ -d "/run/dedalo/" ]; then
+		rm -rf /run/dedalo/
+	fi
 }
