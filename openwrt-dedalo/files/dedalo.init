@@ -77,12 +77,20 @@ dedalo_option_cb() {
 	esac
 }
 
-start_service() {
-
+generate_config() {
 	config_cb() { dedalo_config_cb $1 $2; }
 	option_cb() { dedalo_option_cb $1 $2; }
 
 	config_load dedalo
+}
+
+
+service_triggers() {
+        procd_add_reload_trigger "dedalo"
+}
+
+start_service() {
+	generate_config
 
 	if [ "$start_dedalo" -eq "1" ]; then
 		dedalo config
@@ -94,4 +102,8 @@ stop_service() {
 	if [ -d "/run/dedalo/" ]; then
 		rm -rf /run/dedalo/
 	fi
+}
+
+reload_service() {
+	generate_config
 }
