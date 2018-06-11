@@ -18,12 +18,12 @@ start_dedalo() {
 	procd_close_instance
 }
 
-
 dedalo_config_cb() {
 	local dedalo_inst="$2"
 	if [ "$dedalo_inst" != "" ]; then
 		if [ -e "/opt/icaro/dedalo/config" ]; then
 			rm /opt/icaro/dedalo/config
+                        echo "HS_INTERFACE=\"br-hotspot\"" > "/opt/icaro/dedalo/config"
 		fi
 	fi
 }
@@ -37,11 +37,6 @@ dedalo_option_cb() {
 				start_dedalo=0
 			fi
 			;;
-		network_name)
-			local hs_interface
-			hs_interface=$(/sbin/uci get network."$2".ifname)
-			echo "HS_INTERFACE=\"$hs_interface\"" >> "/opt/icaro/dedalo/config"
-                        ;;
 		network)
 			echo "HS_NETWORK=\"$2\"" >> "/opt/icaro/dedalo/config"
 			;;
