@@ -12,13 +12,22 @@ Pre compiled architectures:
 
 List of compatible devices: https://openwrt.org/supported_devices
 
+Tested OpenWrt releases:
+
+ * OpenWrt 18.06.1
+ * LEDE 17.01.5
+
+Tested devices:
+
+* [Asus RT-N14U](https://openwrt.org/toh/asus/rt-n14u)
+
 ## Installation
 
 1. Add Icaro repository:
 ```shell
 	# echo "src/gz icaro  http://nethesis.github.io/icaro-openwrt_repo/mips_24kc/icaro" >> /etc/opkg/customfeeds.conf
 ```
-2. Disable signature check commenting the line ``option check_signature 0`` in ``/etc/opkg.conf``
+2. Disable signature check commenting the line ``option check_signature 1`` in ``/etc/opkg.conf``
 
 3. Update packages list and install `openwrt-dedalo`:
 ```shell
@@ -80,3 +89,25 @@ config dedalo
  ```shell
 	# dedalo restart
  ```
+
+## Development
+
+1. Follow steps on https://openwrt.org/docs/guide-developer/using_the_sdk
+
+2. Add icaro feeds in `feeds.conf.default` file:
+ ```
+	src-git icaro https://github.com/nethesis/icaro-openwrt.git
+ ```
+or path to your local clone:
+ ```
+	src-link icaro /full/path/to/the/local/folder
+ ```
+3. After `./scripts/feeds update -a` install icaro related packages with:
+ ```shell
+	$ /scripts/feeds install openwrt-dedalo
+ ```
+4. Open configuration menu with `make menuconfig` then select `openwt-dedalo` under Network menu.
+
+5. Compile with `make`
+
+6. The generated repostory with .ipk files are placed in the `bin/packages/<arch>/icaro` directory eg. `bin/packages/mipsel_24kc/icaro`
