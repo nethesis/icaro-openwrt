@@ -25,7 +25,7 @@ Tested devices:
 
 1. Add Icaro repository:
 ```shell
-	# echo "src/gz icaro  http://nethesis.github.io/icaro-openwrt_repo/mips_24kc/icaro" >> /etc/opkg/customfeeds.conf
+	# echo "src/gz icaro  http://nethesis.github.io/icaro-openwrt_repo/mipsel_24kc/icaro" >> /etc/opkg/customfeeds.conf
 ```
 2. Disable signature check commenting the line ``option check_signature 1`` in ``/etc/opkg.conf``
 
@@ -104,7 +104,7 @@ or path to your local clone:
  ```
 3. After `./scripts/feeds update -a` install icaro related packages with:
  ```shell
-	$ /scripts/feeds install openwrt-dedalo
+	$ ./scripts/feeds install openwrt-dedalo
  ```
 4. Open configuration menu with `make menuconfig` then select `openwt-dedalo` under Network menu.
 
