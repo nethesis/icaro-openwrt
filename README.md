@@ -9,6 +9,7 @@ Minimum HW requirements:
 Pre compiled architectures:
 
   * mips_24kc
+  * mipsel_24kc
 
 List of compatible devices: https://openwrt.org/supported_devices
 
@@ -23,13 +24,19 @@ Tested devices:
 
 ## Installation
 
-1. Add Icaro repository:
+1. Enable https for opkg packages lists.
 ```shell
-	# echo "src/gz icaro  http://nethesis.github.io/icaro-openwrt_repo/mipsel_24kc/icaro" >> /etc/opkg/customfeeds.conf
-```
-2. Disable signature check commenting the line ``option check_signature 1`` in ``/etc/opkg.conf``
+	# opkg update
+	# opkg install libustream-mbedtls
 
-3. Update packages list and install `openwrt-dedalo`:
+```
+2. Add Icaro repository for your architecture (`opkg  print-architecture`):
+```shell
+	# echo "src/gz icaro  http://nethesis.github.io/icaro-openwrt_repo/<ARCH>/icaro" >> /etc/opkg/customfeeds.conf
+```
+3. Disable signature check commenting the line ``option check_signature 1`` in ``/etc/opkg.conf``
+
+4. Update packages list and install `openwrt-dedalo`:
 ```shell
 	# opkg update
 	# opkg install openwrt-dedalo
@@ -37,7 +44,7 @@ Tested devices:
 
 ## Network Configuration
 
-Add  at least one network interface to hotspot bridge.
+Add at least one physical interface to the hotspot network and make sure the is only assigned to hotspot network.
 
 ## Configuration
 
