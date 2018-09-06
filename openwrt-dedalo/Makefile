@@ -61,9 +61,9 @@ set firewall.dedalo.forward='DROP'
 set firewall.dedalo.input='DROP'
 set firewall.dedalo.output='ACCEPT'
 
-set firewall.hs_user=forwarding
-set firewall.hs_user.src='dedalo'
-set firewall.hs_user.dest='wan'
+set firewall forwarding
+set firewall.@forwarding[-1].src='dedalo'
+set firewall.@forwarding[-1].dest='wan'
 
 set firewall.hs_uamport=rule
 set firewall.hs_uamport.name='hs_uamport'
