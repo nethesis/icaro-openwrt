@@ -21,6 +21,8 @@ Tested OpenWrt releases:
 Tested devices:
 
 * [Asus RT-N14U](https://openwrt.org/toh/asus/rt-n14u)
+* [GL-AR300M](https://www.gl-inet.com/products/gl-ar300m/)
+* [GL-AR750](https://www.gl-inet.com/products/gl-ar750/)
 
 ## Installation
 
@@ -80,6 +82,8 @@ config dedalo
 
 ## First setup
 
+**Set up network configuration BEFORE this steps**
+
 1. Change `/etc/config/dedalo` with yours configurations setting, you can generate a UUID using:
  ```shell
 	# uuidgen
@@ -95,6 +99,10 @@ config dedalo
 4. Restart dedalo:
  ```shell
 	# dedalo restart
+ ```
+5. Some device need a physical restart for change to be apply correctly (some GL-iNet):
+ ```shell
+	# rebbot
  ```
 
 ## Development
