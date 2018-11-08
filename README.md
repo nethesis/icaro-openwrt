@@ -10,6 +10,7 @@ Pre compiled architectures:
 
   * mips_24kc
   * mipsel_24kc
+  * arm_cortex-a7_neon-vfpv4
 
 List of compatible devices: https://openwrt.org/supported_devices
 
@@ -23,6 +24,32 @@ Tested devices:
 * [Asus RT-N14U](https://openwrt.org/toh/asus/rt-n14u)
 * [GL-AR300M](https://www.gl-inet.com/products/gl-ar300m/)
 * [GL-AR750](https://www.gl-inet.com/products/gl-ar750/)
+* [Raspberry Pi 2](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi)
+
+## Pre-setup for devices with only one network interface (eg. Raspberry Pi 2)
+
+As default configuration Openwrt will set the interface as `lan` with static ip address and dhcp server bound on it.
+For make the installation process easy is recommended to delete the `lan` network and create a `wan` network in the interface:
+
+1. Disable the firwall so you can easy connect to the device via the wan network:
+```console
+# /etc/init.d/firewall stop
+```
+2. Delete the `lan` network and create the `wan` network with dhcp client configuration
+```console
+# uci delete network.lan
+# uci set network.wan=interface
+# uci set network.wan.ifname=eth0
+# uci set network.wan.proto=dhcp
+# uci commit
+# /etc/init.d/network restart
+```
+
+Install all the kernel modules for use an additional usb ethernet adapter:
+```console
+# opkg update
+# opkg install $(opkg find kmod-usb-net* | cut -d ' ' -f 1)
+```
 
 ## Installation
 
