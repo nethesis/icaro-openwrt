@@ -130,6 +130,7 @@ config dedalo
 	option unit_description 'MyHotelAtTheSea'
 	option unit_uuid '161fre6d-8578-4247-b4a2-c40dced94bdd'
 	option secret 'My$uperS3cret'
+	option allow_origin '*'
 ```
 
 Available options:
