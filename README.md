@@ -22,8 +22,8 @@ Tested OpenWrt releases:
 Tested devices:
 
 * [Asus RT-N14U](https://openwrt.org/toh/asus/rt-n14u)
-* [GL-AR300M](https://www.gl-inet.com/products/gl-ar300m/)
-* [GL-AR750](https://www.gl-inet.com/products/gl-ar750/)
+* [GL.iNet GL-AR300M](https://www.gl-inet.com/products/gl-ar300m/)
+* [GL.iNet GL-AR750](https://www.gl-inet.com/products/gl-ar750/)
 * [Raspberry Pi 2](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi)
 
 ## Pre-setup for devices with only one network interface (eg. Raspberry Pi 2)
